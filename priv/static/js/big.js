@@ -27,7 +27,8 @@ window.onload = function() {
         if (window.location.hash !== n) window.location.hash = n;
         document.title = e.textContent || e.innerText;
     }
-    document.onclick = function() { go(++big.current % (s.length)); };
+    // arrows only :)
+    //document.onclick = function() { go(++big.current % (s.length)); };
     function fwd() { go(Math.min(s.length - 1, ++big.current)); }
     function rev() { go(Math.max(0, --big.current)); }
     document.onkeydown = function(e) {

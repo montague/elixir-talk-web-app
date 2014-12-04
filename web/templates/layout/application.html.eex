@@ -8,6 +8,7 @@
     <meta name="author" content="">
 
     <title>Hello Phoenix!</title>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="/css/big.css">
   </head>
 

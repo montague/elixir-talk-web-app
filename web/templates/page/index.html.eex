@@ -1,13 +1,70 @@
+<style>
+  .red{color: red}
+  .center{text-align: center}
+</style>
 <div>
   <ul>
     <li>Elixir background (jose valim built it after getting frustrated working on adding concurrency support to rails.</li>
     <li>See http://www.infoq.com/interviews/valim-elixir</li>
+  </ul>
 </div>
-<div>Brief tour of syntax (show cool bits)</div>
-<div>Brief tour of build tools (show cool bits)</div>
-<div>Demonstrate message-passing (open two processes, send a message between them)</div>
+<div>
+  Brief tour of language features (show cool bits)
+  <ul>
+    <li>pattern matching</li>
+    <li>guard clauses</li>
+    <li>macros</li>
+    <li>protocols</li>
+    <li>anonymous functions</li>
+  </ul>
+</div>
+
+<!-- Pattern Matching -->
+<div class="red">Pattern Matching</div>
+<div>
+  <code><pre>
+    defmodule Food do
+      def is_good?(:pizza), do: true
+      def is_good?(:sardines), do: false
+    end
+  </pre></code>
+</div>
+<div>
+  <code><pre>
+    iex(4)> Food.is_good? :pizza
+    true
+    iex(5)> Food.is_good? :sardines
+    false
+  </pre></code>
+</div>
+<div>What happens if we pass something that doesn't match?</div>
+<div>
+  <h3 class="center">Oh noes</h3>
+  <code><pre>
+    iex(3)> Food.is_good?(:chicken_faces)
+    ** (FunctionClauseError) no function clause matching in Food.is_good?/1
+      iex:2: Food.is_good?(:chicken_faces)
+  </pre></code>
+</div>
+<div>Let's fix this.</div>
+<div>
+  <code><pre>
+    defmodule Food do
+      def is_good?(unknown_food) do
+        IO.puts "I haven't tried #{unknown_food}"
+        nil # implicit return
+      end
+    end
+  </pre></code>
+</div>
+
+<div>Brief tour of build tools (show cool bits)
+  -- documentation
+  -- spec tag (read up on typespecs: http://elixir-lang.org/docs/stable/elixir/Kernel.Typespec.html)
+</div>
+<div>Code Demo: Demonstrate message-passing (open two processes, send a message between them)</div>
 <div>show how message passing allows maintaining state without mutation (stays functional)</div>
 <div>talk about this in terms of web development</div>
-<div>introduce phoenix</div>
+<div>Introduce phoenix</div>
 <div>each request is an elixir process (light weight, lots can be running at once</div>
 <div>long-running request does not affect througput (expound on this)</div>
