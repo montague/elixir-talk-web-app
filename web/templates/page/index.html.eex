@@ -9,13 +9,13 @@
   </ul>
 </div>
 <div>
-  Brief tour of language features (show cool bits)
+  Brief tour of language features
   <ul>
     <li>pattern matching</li>
-    <li>guard clauses</li>
-    <li>macros</li>
-    <li>protocols</li>
     <li>anonymous functions</li>
+    <li>protocols</li>
+    <li>macros</li>
+    <li>guard clauses</li>
   </ul>
 </div>
 
@@ -29,23 +29,9 @@
     end
   </pre></code>
 </div>
-<div>
-  <code><pre>
-    iex(4)> Food.is_good? :pizza
-    true
-    iex(5)> Food.is_good? :sardines
-    false
-  </pre></code>
-</div>
+<div>iex</div>
 <div>What happens if we pass something that doesn't match?</div>
-<div>
-  <h3 class="center">Oh noes</h3>
-  <code><pre>
-    iex(3)> Food.is_good?(:chicken_faces)
-    ** (FunctionClauseError) no function clause matching in Food.is_good?/1
-      iex:2: Food.is_good?(:chicken_faces)
-  </pre></code>
-</div>
+<!-- go to iex and Food.is_good? :chicken_faces -->
 <div>Let's fix this.</div>
 <div>
   <code><pre>
@@ -54,10 +40,46 @@
         IO.puts "I haven't tried #{unknown_food}"
         nil # implicit return
       end
+      def is_good?(:sardines), do: false
+      def is_good?(:pizza), do: true
+    end
+  </pre></code>
+</div>
+<!-- error due to order of pattern matching -->
+<div>
+  <code><pre>
+    defmodule Food do
+      # this should work :)
+      def is_good?(:sardines), do: false
+      def is_good?(:pizza), do: true
+      def is_good?(_) do
+        IO.puts "I haven't tried it!"
+        nil # implicit return
+      end
+    end
+  </pre></code>
+</div>
+<!-- guard clauses -->
+<div class="red">Guard Clauses</div>
+<div>
+  <code><pre>
+    defmodule Person do
+      def is_cool?(name, _) when name == :ian, do: true
+      def is_cool?(_, age) when age &gt; 10 and age &lt;= 13, do: false
+      def is_cool?(name, age) do
+        IO.puts "Of course #{name}, age #{age} is cool!!"
+        true
+      end
     end
   </pre></code>
 </div>
 
+<!-- anonymous functions -->
+<div>Anonymous Functions</div>
+<!-- Protocols -->
+<div>Protocols</div>
+<!-- macros -->
+<div class="red">Macros</div>
 <div>Brief tour of build tools (show cool bits)
   -- documentation
   -- spec tag (read up on typespecs: http://elixir-lang.org/docs/stable/elixir/Kernel.Typespec.html)
