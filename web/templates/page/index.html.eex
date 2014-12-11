@@ -28,7 +28,6 @@
     <li>concurrent</li>
     <li>distributed</li>
     <li>fault tolerant</li>
-    <li>hot code swappable!</li>
   </ul>
 </div>
 <div>
@@ -266,7 +265,6 @@ quote do: 2 + 2
   <ul>
     <li>concurrent</li>
     <li>distributed</li>
-    <li>hot code swapping (sounds NSFW, but is totally SFW)</li>
     <li>fault tolerance show supervisor</li>
   </ul>
 </div>
@@ -312,13 +310,11 @@ quote do: 2 + 2
     send mom_pid, {"what's for dinner", self}
   </pre></code>
 </div>
-<!--
-  hot code swapping
-  open two terminals, show code reloading upon message receipt
--->
-<div class="red">hot code swapping</div>
+<!-- fault tolerant -->
+<div class="red">fault tolerant</div>
+<div>From OTP, we have "code supervising code"</div>
 
-<div>Code Demo: Demonstrate message-passing (open two processes, send a message between them)</div>
+
 <div>show how message passing allows maintaining state without mutation (stays functional)</div>
 <div>talk about this in terms of web development</div>
 <div>Introduce phoenix</div>
