@@ -1,21 +1,44 @@
 <style>
   .red{color: red}
   .center{text-align: center}
+  ul{ margin-left: 2em;}
+  small{
+    display: block;
+    size: 10px;
+    text-align: center;
+    font-style: italic;
+  }
 </style>
 <div>
+  <h2>Elixir!</h2>
+</div>
+<div>Erlang for the people</div>
+<div class="red">Background</div>
+<div>
   <ul>
-    <li>Elixir background (jose valim built it after getting frustrated working on adding concurrency support to rails.</li>
-    <li>See http://www.infoq.com/interviews/valim-elixir</li>
+    <li>Built by Jose Valim (fifth highest committer to rails)</li>
+    <li>Project grew out of frustration trying to add concurrency support to rails</li>
+    <li>Ruby-inspired syntax</li>
+    <li>Compiles to BEAM bytecode (Erlang VM)</li>
   </ul>
 </div>
 <div>
-  Brief tour of language features
+  Applications that are...
+  <ul>
+    <li>concurrent</li>
+    <li>distributed</li>
+    <li>fault tolerant</li>
+    <li>hot code swappable!</li>
+  </ul>
+</div>
+<div>
+  Now, for a brief tour of language features
   <ul>
     <li>pattern matching</li>
+    <li>guard clauses</li>
     <li>anonymous functions</li>
     <li>protocols</li>
     <li>macros</li>
-    <li>guard clauses</li>
   </ul>
 </div>
 
@@ -24,24 +47,26 @@
 <div>
   <code><pre>
     defmodule Food do
-      def is_good?(:pizza), do: true
-      def is_good?(:sardines), do: false
+      def ian_likes?(:pizza), do: true
+      def ian_likes?(:sardines), do: false
     end
   </pre></code>
 </div>
-<div>iex</div>
-<div>What happens if we pass something that doesn't match?</div>
-<!-- go to iex and Food.is_good? :chicken_faces -->
+<div>
+  What happens if something doesn't match?
+  <small>to iex!</small>
+</div>
+<!-- go to iex and Food.is_good?(:chicken_faces) -->
 <div>Let's fix this.</div>
 <div>
   <code><pre>
     defmodule Food do
-      def is_good?(unknown_food) do
+      def ian_likes?(unknown_food) do
         IO.puts "I haven't tried #{unknown_food}"
         nil # implicit return
       end
-      def is_good?(:sardines), do: false
-      def is_good?(:pizza), do: true
+      def ian_likes?(:sardines), do: false
+      def ian_likes?(:pizza), do: true
     end
   </pre></code>
 </div>
@@ -50,9 +75,9 @@
   <code><pre>
     defmodule Food do
       # this should work :)
-      def is_good?(:sardines), do: false
-      def is_good?(:pizza), do: true
-      def is_good?(_) do
+      def ian_likes?(:sardines), do: false
+      def ian_likes?(:pizza), do: true
+      def ian_likes?(_) do
         IO.puts "I haven't tried it!"
         nil # implicit return
       end
@@ -76,13 +101,173 @@
 
 <!-- anonymous functions -->
 <div>Anonymous Functions</div>
+<div>
+  <code><pre>
+    # first-class functions
+    anonymous = fn caller -&gt; IO.puts "#{caller} called anonymous!" end
+  </pre></code>
+</div>
+<div>
+  <code><pre>
+    # defined inline
+    Enum.map([1,2,3], fn x -&gt; x * x end)
+  </pre></code>
+</div>
+<div>
+  <code><pre>
+    # currying
+    feed_animal = fn (animal) -&gt; (fn (amount)-&gt; IO.puts "You fed the #{animal} #{amount}" end) end
+  </pre></code>
+</div>
+
 <!-- Protocols -->
-<div>Protocols</div>
+<div class="red">Protocols</div>
+<div>Protocols are how elixir implements polymorphism</div>
+<div>
+  <code><pre>
+    defprotocol Awesomeness do
+      def has_it?(data)
+    end
+
+    defimpl Awesomeness, for: BitString do
+      def has_it?(str), do: str == "elixir"
+    end
+
+    defimpl Awesomeness, for: Atom do
+      def has_it?(atom), do: atom == :elixir
+    end
+  </pre></code>
+</div>
+<div>What about all the other types?</div>
+<div>
+  <code><pre>
+    defprotocol Awesomeness do
+      @fallback_to_any true
+      def has_it?(data)
+    end
+
+    defimpl Awesomeness, for: BitString do
+      def has_it?(str), do: str == "elixir"
+    end
+
+    defimpl Awesomeness, for: Atom do
+      def has_it?(atom), do: atom == :elixir
+    end
+
+    defimpl Awesomeness, for: Any do
+      def has_it?(_), do: false
+    end
+  </pre></code>
+</div>
+
 <!-- macros -->
 <div class="red">Macros</div>
-<div>Brief tour of build tools (show cool bits)
-  -- documentation
-  -- spec tag (read up on typespecs: http://elixir-lang.org/docs/stable/elixir/Kernel.Typespec.html)
+<div>Macros are how Elixir implements metaprogramming</div>
+<div>Based on the manipulation of Elixir's AST (or "quoted expression")</div>
+<div>
+  Code is represented in tuples. The "quote" macro returns the expression's tuple.
+</div>
+<div>
+  <code><pre>
+quote do: 2 + 2
+# =&gt; {:+, [context: Elixir, import: Kernel], [2, 2]}
+  </pre></code>
+</div>
+<div>A macro manipulates elixir's inner representation of the code</div>
+<div>
+  <code><pre>
+    defmodule IdentifyYourself do
+      defmacro whoami(name) do
+        quote do
+          def unquote(name)(), do: "I am #{unquote(name)}"
+        end
+      end
+    end
+
+    defmodule People do
+      import IdentifyYourself
+      whoami :ted
+      whoami :william
+    end
+  </pre></code>
+</div>
+
+<!-- TOOLS! -->
+<div class="red">Mix!!</div>
+<div>Mix is elixir's butler</div>
+<div> With mix, you can...</div>
+<div>
+  <code><pre>
+    # compile your code into an executable
+    &gt; mix escript.build
+  </pre></code>
+</div>
+<div>
+  <code><pre>
+    # start a new project
+    &gt; mix new my_awesome_project
+  </pre></code>
+</div>
+<div>
+  <code><pre>
+    # install dependencies
+    &gt; mix deps.get
+  </pre></code>
+</div>
+<div>
+  <code><pre>
+    # run your project
+    &gt; mix run my_awesome_project
+  </pre></code>
+</div>
+<div>
+  <code><pre>
+    # anything else you program it to do
+    &gt; mix paypal.be_agile
+  </pre></code>
+</div>
+<!-- testing -->
+<div class="red">Testing</div>
+<div>ExUnit is elixir's test framework</div>
+<div>
+  <code><pre>
+  # From http://elixir-lang.org/docs/stable/ex_unit/
+  # File: assertion_test.exs
+
+  # 1) Start ExUnit.
+  ExUnit.start
+
+  # 2) Create a new test module (test case) and use [`ExUnit.Case`](ExUnit.Case.html).
+  defmodule AssertionTest do
+    # 3) Notice we pass `async: true`, this runs the test case
+    #    concurrently with other test cases
+    use ExUnit.Case, async: true
+
+    # 4) Use the `test` macro instead of `def` for clarity.
+    test "the truth" do
+      assert true
+    end
+  end
+  </pre></code>
+</div>
+<div class="red">iex</div>
+<div>
+  iex is like irb after a haircut and a bath
+</div>
+<div>
+  <code><pre>
+  # run this
+  iex(1)&gt; h
+  </pre></code>
+</div>
+<!-- More cool stuff -->
+<div>
+  <ul>
+    <li>hot code swapping (sfw) use reload</li>
+    <li>distributed by default show message passing</li>
+    <li>fault tolerance show supervisor</li>
+    <li>concurrent by default show parallel stuff</li>
+  </ul>
 </div>
 <div>Code Demo: Demonstrate message-passing (open two processes, send a message between them)</div>
 <div>show how message passing allows maintaining state without mutation (stays functional)</div>
@@ -90,3 +275,13 @@
 <div>Introduce phoenix</div>
 <div>each request is an elixir process (light weight, lots can be running at once</div>
 <div>long-running request does not affect througput (expound on this)</div>
+
+<!-- Resources -->
+<div color="red">Resources</div>
+<div>
+  <ul>
+    <li>http://elixir-lang.org/</li>
+    <li>https://github.com/phoenixframework/phoenix</li>
+    <li>http://www.infoq.com/interviews/valim-elixir</li>
+  </ul>
+</div>
