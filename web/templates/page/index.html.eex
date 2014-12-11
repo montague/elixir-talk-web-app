@@ -295,21 +295,21 @@ quote do: 2 + 2
     defmodule Mom do
       def listen_to_ian do
         receive do
-          {"what's for dinner", ian} -&gt; 
-            send ian, {"Meatloaf"}
+          {"what's for dinner", ian_pid} -&gt; 
+            send ian_pid, {"Meatloaf"}
             listen_to_ian
-          {_, ian} -&gt;
-            send ian, {"Ask your father."}
+          {_, ian_pid} -&gt;
+            send ian_pid, {"Ask your father."}
             listen_to_ian
         end
       end
     end
 
     # ian
-    mom = Node.spawn_link :"mom@LM-BOS-00871665", fn -&gt;
+    mom_pid = Node.spawn_link :"mom@LM-BOS-00871665", fn -&gt;
       Mom.listen_to_ian
     end
-    send mom, {"what's for dinner", self}
+    send mom_pid, {"what's for dinner", self}
   </pre></code>
 </div>
 <!--
@@ -317,6 +317,7 @@ quote do: 2 + 2
   open two terminals, show code reloading upon message receipt
 -->
 <div class="red">hot code swapping</div>
+
 <div>Code Demo: Demonstrate message-passing (open two processes, send a message between them)</div>
 <div>show how message passing allows maintaining state without mutation (stays functional)</div>
 <div>talk about this in terms of web development</div>
