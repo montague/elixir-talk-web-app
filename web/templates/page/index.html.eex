@@ -262,13 +262,61 @@ quote do: 2 + 2
 </div>
 <!-- More cool stuff -->
 <div>
+  MOAR COOL STUFF!!!
   <ul>
-    <li>hot code swapping (sfw) use reload</li>
-    <li>distributed by default show message passing</li>
+    <li>concurrent</li>
+    <li>distributed</li>
+    <li>hot code swapping (sounds NSFW, but is totally SFW)</li>
     <li>fault tolerance show supervisor</li>
-    <li>concurrent by default show parallel stuff</li>
   </ul>
 </div>
+
+<div class="red">mad concurrent</div>
+<div>
+  kick off <span class="red">n</span> elixir processes using all cores/processors on your machine
+</div>
+<div>
+  <code><pre>
+  # from https://pragprog.com/book/elixir/programming-elixir
+  defmodule Parallel do
+    def pmap(collection, func) do
+    collection
+    |&gt; Enum.map(&amp;(Task.async(fn -&gt; func.(&amp;1) end)))
+    |&gt; Enum.map(&amp;Task.await/1)
+    end
+  end
+  </pre></code>
+</div>
+<!-- distributed message passing -->
+<div class="red">dis -- trib -- uted</div>
+<div>
+  <code><pre>
+    # mom
+    defmodule Mom do
+      def listen_to_ian do
+        receive do
+          {"what's for dinner", ian} -&gt; 
+            send ian, {"Meatloaf"}
+            listen_to_ian
+          {_, ian} -&gt;
+            send ian, {"Ask your father."}
+            listen_to_ian
+        end
+      end
+    end
+
+    # ian
+    mom = Node.spawn_link :"mom@LM-BOS-00871665", fn -&gt;
+      Mom.listen_to_ian
+    end
+    send mom, {"what's for dinner", self}
+  </pre></code>
+</div>
+<!--
+  hot code swapping
+  open two terminals, show code reloading upon message receipt
+-->
+<div class="red">hot code swapping</div>
 <div>Code Demo: Demonstrate message-passing (open two processes, send a message between them)</div>
 <div>show how message passing allows maintaining state without mutation (stays functional)</div>
 <div>talk about this in terms of web development</div>
@@ -277,7 +325,7 @@ quote do: 2 + 2
 <div>long-running request does not affect througput (expound on this)</div>
 
 <!-- Resources -->
-<div color="red">Resources</div>
+<div style="red">Resources</div>
 <div>
   <ul>
     <li>http://elixir-lang.org/</li>
