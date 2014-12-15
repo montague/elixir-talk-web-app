@@ -369,24 +369,35 @@ quote do: 2 + 2
   <h3>Phoenix (<a href="https://github.com/phoenixframework/phoenix">code</a>)</h3>
   <ul>
     <li>Goal is to be able to use it for everything you use rails for</li>
-    <li>Each request is an elixir process</li>
+    <li>PubSub outta the box</li>
+    <li>Each request is a location-transparent elixir process</li>
     <li>Long-running requests do not affect throughput (blocking in controllers is ok!)</li>
+    <li>Did I mention concurrent and fault-tolerant?</li>
   </ul>
 </div>
-<div>talk about this in terms of web development</div>
-<div>Introduce phoenix</div>
-<div>each request is an elixir process (light weight, lots can be running at once</div>
-<div>long-running request does not affect througput (expound on this)</div>
-
+<div>Cool, so what did you build?</div>
+<div>
+  <h2 class="center">elixir hangman</h2>
+  <br/>
+  <br/>
+  <a href="https://github.com/montague/elixir_hangman">https://github.com/montague/elixir_hangman</a>
+</div>
+<div>
+  Oh, and this presentation on elixir...
+</div>
+<div>
+  is written in elixir!
+  <img style="margin-left: auto; margin-right: auto;" src="images/mind_blown.gif"/>
+</div>
 <!-- Resources -->
-<div style="red">Resources</div>
+<div class="red">Resources</div>
 <div>
   <ul>
-    <li>http://elixir-lang.org/</li>
-    <li>https://github.com/phoenixframework/phoenix</li>
-    <li>http://www.infoq.com/interviews/valim-elixir</li>
-    <li>https://news.ycombinator.com/item?id=8671618</li>
-    <li>https://news.ycombinator.com/item?id=8188949</li>
-    <li>http://www.confreaks.com/videos/4132-elixirconf2014-rise-of-the-phoenix-building-an-elixir-web-framework</li>
+    <li><a href="http://elixir-lang.org/">http://elixir-lang.org/</a></li>
+    <li><a href="https://github.com/phoenixframework/phoenix">https://github.com/phoenixframework/phoenix</a></li>
+    <li><a href="http://www.infoq.com/interviews/valim-elixir">http://www.infoq.com/interviews/valim-elixir</a></li>
+    <li><a href="https://news.ycombinator.com/item?id=8671618">https://news.ycombinator.com/item?id=8671618</a></li>
+    <li><a href="https://news.ycombinator.com/item?id=8188949">https://news.ycombinator.com/item?id=8188949</a></li>
+    <li><a href="http://www.confreaks.com/videos/4132-elixirconf2014-rise-of-the-phoenix-building-an-elixir-web-framework">http://www.confreaks.com/videos/4132-elixirconf2014-rise-of-the-phoenix-building-an-elixir-web-framework</a></li>
   </ul>
 </div>
