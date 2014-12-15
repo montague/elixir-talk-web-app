@@ -185,8 +185,8 @@ quote do: 2 + 2
 
     defmodule People do
       import IdentifyYourself
-      whoami :ted
-      whoami :william
+      whoami :person
+      whoami :faceman
     end
   </pre></code>
 </div>
@@ -313,9 +313,66 @@ quote do: 2 + 2
 <!-- fault tolerant -->
 <div class="red">fault tolerant</div>
 <div>From OTP, we have "code supervising code"</div>
+<div>The following example is from <br/><a href="http://elixir-lang.org/docs/stable/elixir/Supervisor.html">
+    http://elixir-lang.org/docs/stable/elixir/Supervisor.html
+</a></div>
+<div>
+  <code><pre>
+   # define a server to be supervised
+   defmodule Stack do
+    use GenServer
 
+    def start_link(state) do
+      GenServer.start_link(__MODULE__, state, [name: :sup_stack])
+    end
 
-<div>show how message passing allows maintaining state without mutation (stays functional)</div>
+    def handle_call(:pop, _from, [h|t]) do
+      {:reply, h, t}
+    end
+
+    def handle_cast({:push, h}, t) do
+      {:noreply, [h|t]}
+    end
+  end
+  </pre></code>
+</div>
+<div>
+  <code><pre>
+    # Import helpers for defining supervisors
+    import Supervisor.Spec
+
+    # We are going to supervise the Stack server which will
+    # be started with a single argument [:hello]
+    children = [
+      worker(Stack, [[:hello]])
+    ]
+
+    # Start the supervisor with our one child
+    {:ok, pid} = Supervisor.start_link(children, strategy: :one_for_one)
+  </pre></code>
+</div>
+<div>
+  <code><pre>
+    iex&gt; GenServer.call(:sup_stack, :pop)
+
+    iex&gt; GenServer.cast(:sup_stack, {:push, :world})
+
+    iex&gt; GenServer.call(:sup_stack, :pop)
+  </pre></code>
+</div>
+<div>
+  Ok, enough "Demo" stuff. Show me a real thing built in elixir!
+</div>
+<div>Why, certainly.</div>
+<div class="red">Phoenix!!</div>
+<div>
+  <h3>Phoenix (<a href="https://github.com/phoenixframework/phoenix">code</a>)</h3>
+  <ul>
+    <li>Goal is to be able to use it for everything you use rails for</li>
+    <li>Each request is an elixir process</li>
+    <li>Long-running requests do not affect throughput (blocking in controllers is ok!)</li>
+  </ul>
+</div>
 <div>talk about this in terms of web development</div>
 <div>Introduce phoenix</div>
 <div>each request is an elixir process (light weight, lots can be running at once</div>
@@ -328,5 +385,8 @@ quote do: 2 + 2
     <li>http://elixir-lang.org/</li>
     <li>https://github.com/phoenixframework/phoenix</li>
     <li>http://www.infoq.com/interviews/valim-elixir</li>
+    <li>https://news.ycombinator.com/item?id=8671618</li>
+    <li>https://news.ycombinator.com/item?id=8188949</li>
+    <li>http://www.confreaks.com/videos/4132-elixirconf2014-rise-of-the-phoenix-building-an-elixir-web-framework</li>
   </ul>
 </div>
