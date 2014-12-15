@@ -387,7 +387,7 @@ quote do: 2 + 2
 </div>
 <div>
   is written in elixir!
-  <img style="margin-left: auto; margin-right: auto;" src="images/mind_blown.gif"/>
+  <img src="images/mind_blown.gif"/>
 </div>
 <!-- Resources -->
 <div class="red">Resources</div>
