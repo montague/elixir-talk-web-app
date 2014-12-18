@@ -3,7 +3,7 @@
 </div>
 <div>Erlang for the people</div>
 <div>
-  <h3 class="center">Instead of</h3>
+  <h3 class="center">Erlang Syntax</h3>
   <code><pre>
     -module(pizza).
     -export([eat/0]).
