@@ -8,7 +8,7 @@
     <meta name="author" content="">
 
     <title>Hello Phoenix!</title>
-    <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans&v=2' rel='stylesheet' type='text/css'>
     <link rel="shortcut icon" href="/favicon.ico?v2" />
     <link rel="stylesheet" href="/css/big.css">
     <link rel="stylesheet" href="/css/override.css">
