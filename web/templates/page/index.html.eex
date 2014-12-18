@@ -2,12 +2,15 @@
   <h2>Elixir!</h2>
 </div>
 <div>Erlang for the people</div>
-<div class="red">Background</div>
 <div>
-  <ul>
-    <li>Built by Jose Valim (5th highest committer to rails)</li>
-    <li>Got frustrated trying to add concurrency support to rails</li>
-  </ul>
+  <h3 class="center">Instead of</h3>
+  <code><pre>
+    -module(pizza).
+    -export([eat/0]).
+
+    eat -&gt;
+      io:fwrite("Eating pizza!\n").
+  </pre></code>
 </div>
 <div>
   <h3>Ruby-inspired syntax</h3>
@@ -18,6 +21,13 @@
       end
     end
   </pre></code>
+</div>
+<div class="red">Background</div>
+<div>
+  <ul>
+    <li>Built by <em>Jose Valim</em> (5th highest committer to rails)</li>
+    <li>He got frustrated trying to add concurrency support to rails</li>
+  </ul>
 </div>
 <div>
   <h3>Runs on the Erlang VM</h3>
@@ -59,10 +69,7 @@
 </div>
 <div>
   What happens if something doesn't match?
-  <small>to iex!</small>
 </div>
-<!-- go to iex and Food.is_good?(:chicken_faces) -->
-<div>Let's fix this.</div>
 <div>
   <code><pre>
     defmodule Food do
@@ -79,7 +86,6 @@
 <div>
   <code><pre>
     defmodule Food do
-      # this should work :)
       def ian_likes?(:sardines), do: false
       def ian_likes?(:pizza), do: true
       def ian_likes?(_) do
@@ -121,7 +127,9 @@
 <div>
   <code><pre>
     # currying
-    feed_animal = fn (animal) -&gt; (fn (amount)-&gt; IO.puts "You fed the #{animal} #{amount}" end) end
+    feed_animal = fn (animal) -&gt;
+      fn (amount) -&gt; IO.puts "You fed the #{animal} #{amount}" end
+    end
   </pre></code>
 </div>
 
@@ -167,15 +175,13 @@
 
 <!-- macros -->
 <div class="red">Macros</div>
-<div>Macros are how Elixir implements metaprogramming</div>
-<div>Based on the manipulation of Elixir's AST (or "quoted expression")</div>
+<div>Macros are how Elixir implements <em>metaprogramming</em></div>
+<div>Based on the manipulation of Elixir's AST</div>
 <div>
-  Code is represented in tuples. The "quote" macro returns the expression's tuple.
-</div>
-<div>
+  <h3>Code is represented in tuples</h3>
   <code><pre>
-quote do: 2 + 2
-# =&gt; {:+, [context: Elixir, import: Kernel], [2, 2]}
+    &gt; quote do: 2 + 2
+      # =&gt; {:+, [context: Elixir, import: Kernel], [2, 2]}
   </pre></code>
 </div>
 <div>A macro manipulates elixir's inner representation of the code</div>
@@ -319,11 +325,9 @@ quote do: 2 + 2
 <!-- fault tolerant -->
 <div class="red">fault tolerant</div>
 <div>From OTP, we have "code supervising code"</div>
-<div>The following example is from <br/><a href="http://elixir-lang.org/docs/stable/elixir/Supervisor.html">
-    http://elixir-lang.org/docs/stable/elixir/Supervisor.html
-</a></div>
 <div>
   <code><pre>
+   # http://elixir-lang.org/docs/stable/elixir/Supervisor.html
    # define a server to be supervised
    defmodule Stack do
     use GenServer
@@ -366,45 +370,37 @@ quote do: 2 + 2
     iex&gt; GenServer.call(:sup_stack, :pop)
   </pre></code>
 </div>
-<div>
-  Ok, enough "Demo" stuff. Show me a real thing built in elixir!
-</div>
-<div>Why, certainly.</div>
-<div class="red">Phoenix!!</div>
+<div class="red">Phoenix</div>
 <div>
   <h3>Phoenix (<a href="https://github.com/phoenixframework/phoenix">code</a>)</h3>
   <ul>
     <li>Goal is to be able to use it for everything you use rails for</li>
-    <li>PubSub outta the box</li>
+    <li>PubSub "out of the box"</li>
     <li>Each request is a location-transparent elixir process</li>
     <li>Long-running requests do not affect throughput (blocking in controllers is ok!)</li>
-    <li>Did I mention concurrent and fault-tolerant?</li>
   </ul>
 </div>
-<div>Cool, so what did you build?</div>
+<div>
+  A couple things I built while learning elixir
+</div>
 <div>
   <h2 class="center">elixir hangman</h2>
-  <br/>
   <br/>
   <a href="https://github.com/montague/elixir_hangman">https://github.com/montague/elixir_hangman</a>
 </div>
 <div>
-  Oh, and this presentation on elixir...
-</div>
-<div>
-  is written in elixir!
+  This presentation!
   <img src="images/mind_blown.gif"/>
 </div>
 <!-- Resources -->
-<div class="red">Resources</div>
 <div>
+  <h3>Resources</h3>
   <ul>
     <li><a href="http://elixir-lang.org/">http://elixir-lang.org/</a></li>
     <li><a href="https://github.com/phoenixframework/phoenix">https://github.com/phoenixframework/phoenix</a></li>
     <li><a href="http://www.infoq.com/interviews/valim-elixir">http://www.infoq.com/interviews/valim-elixir</a></li>
     <li><a href="https://news.ycombinator.com/item?id=8671618">https://news.ycombinator.com/item?id=8671618</a></li>
     <li><a href="https://news.ycombinator.com/item?id=8188949">https://news.ycombinator.com/item?id=8188949</a></li>
-    <li><a href="http://www.confreaks.com/videos/4132-elixirconf2014-rise-of-the-phoenix-building-an-elixir-web-framework">http://www.confreaks.com/videos/4132-elixirconf2014-rise-of-the-phoenix-building-an-elixir-web-framework</a></li>
     <li><a href="https://github.com/montague/elixir-talk-web-app">https://github.com/montague/elixir-talk-web-app</a></li>
   </ul>
 </div>

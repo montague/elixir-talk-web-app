@@ -5,15 +5,14 @@ li{
   margin-bottom: 10px;
   margin-top: 10px;
 }
-.red{color: red}
-.center{text-align: center}
+.red{color: red;}
+.center{text-align: center;}
 ul{ margin-left: 2em;}
-small{
-  display: block;
-  size: 10px;
-  text-align: center;
-  font-style: italic;
-}
 h3{
   text-align: center;
+}
+a{
+  color: yellow;
+  background: black;
+  font-size: .5em;
 }
